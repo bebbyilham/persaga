@@ -34,3 +34,16 @@ function check_access($role_id, $menu_id)
         return "checked='checked'";
     }
 }
+
+function check_pertanyaan_keluarga($id, $id_pertanyaan)
+{
+    $ci = get_instance();
+
+    $ci->db->where('id_kejiwaan_keluarga', $id);
+    $ci->db->where('id_pertanyaan', $id_pertanyaan);
+    $result = $ci->db->get('list_kejiwaan_keluarga');
+
+    if ($result->num_rows() > 0) {
+        return "checked='checked'";
+    }
+}

@@ -184,7 +184,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white">Kembali</button>
+          <a href="<?= base_url(); ?>beranda/jiwakeluarga/" type="button" class="btn btn-white">Kembali</a>
         </div>
       </div>
     </div>
@@ -201,12 +201,12 @@
         <div class="modal-body">
           <div class="py-3 text-center">
             <i class="fas fa-smile fa-10x"></i>
-            <h3 class="heading mt-4">KONDISI KELUARGA NORMAL</h3>
+            <h3 class="heading mt-4">Anda Tidak Mengalami Masalah Kesehatan Jiwa</h3>
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-white">Kembali</button>
+          <a href="<?= base_url(); ?>beranda/jiwakeluarga/" type="button" class="btn btn-white">Kembali</a>
         </div>
       </div>
     </div>

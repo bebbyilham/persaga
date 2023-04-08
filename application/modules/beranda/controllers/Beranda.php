@@ -62,6 +62,22 @@ class Beranda extends MX_Controller
         echo json_encode($idjiwakeluarga);
     }
 
+    public function simpangejalakambuh()
+    {
+        $id_pasien = $_POST['id_pasien'];
+        $id_user = $_POST['id_user'];
+
+        $data = array(
+            'id_pasien'         => $id_pasien,
+            'id_user'           => $id_user,
+            'status'            => 0,
+        );
+
+        $this->Beranda_model->simpan_gejala_kambuh($data);
+        $idgejalakambuh = $this->db->insert_id();
+        echo json_encode($idgejalakambuh);
+    }
+
     public function formkesehatanjiwakeluarga($id)
     {
         $data['title'] = 'Kesehatan Jiwa Keluarga';
@@ -119,6 +135,123 @@ class Beranda extends MX_Controller
         echo 'Pertanyaan dijawab';
     }
 
+    public function formgejalakambuh($id)
+    {
+        $data['title'] = 'Deteksi Dini Gejala Kambuh Pada Pasien Gangguan Jiwa';
+        $data['user'] = $this->db->get_where('user', ['username' =>
+        $this->session->userdata('username')])->row_array();
+
+        // $data['role'] = $this->db->get_where('user_role', ['id' => $role_id])
+        //     ->row_array();
+
+        // $this->db->where('id !=', 2);
+        $data['gejala'] = $this->db->get_where('gejala_kambuh', ['id' => $id])
+            ->row_array();
+        $data['pertanyaan'] = $this->db->order_by('id', 'ASC')->get('master_tanda_gejala_pasien')->result_array();
+
+        $data['content'] = '';
+        $page = 'beranda/form_gejala_kambuh';
+        // echo modules::run('template/loadview', $data);
+        echo modules::run('template/loadview', $data, $page);
+    }
+
+    public function simpangejalakambuhpasien()
+    {
+        $id_gejala_kambuh = $_POST['id_gejala_kambuh'];
+        $hasil = $this->db->get_where('list_gejala_kambuh', ['id_gejala_kambuh' => $id_gejala_kambuh])->num_rows();
+        $tahap = $this->db->limit(1)->order_by('tahap', 'DESC')->get_where('list_gejala_kambuh', ['id_gejala_kambuh' => $id_gejala_kambuh])->row_array();
+
+        $data = array(
+            'status'    => $_POST['status'],
+            'hasil'     => $hasil,
+            'tahap'     => $tahap['tahap']
+        );
+        // $this->Beranda_model->simpan_gejala_kambuh_pasien($id_gejala_kambuh, $data);
+        $id_tahap = $tahap['tahap'];
+        $hasiltahap = $this->db->get_where('master_tahap_kambuh', ['id_tahap' => $id_tahap])->row_array();
+        $hasiltindakan = $this->db->get_where('master_tindakan_keluarga', ['id_tahap' => $id_tahap])->result_array();
+
+        $message = [
+            'hasiltahap' => $hasiltahap,
+            'hasiltindakan' => $hasiltindakan
+        ];
+        echo json_encode($message);
+    }
+
+    public function changeGejala()
+    {
+        $id_gejala_kambuh = $this->input->post('gejalaId');
+        $id_pertanyaan = $this->input->post('pertanyaanId');
+        $tahap = $this->input->post('tahap');
+
+
+        $data = [
+            'id_gejala_tanda' => $id_pertanyaan,
+            'id_gejala_kambuh' => $id_gejala_kambuh,
+            'tahap' => $tahap,
+            'jawaban' => 1
+        ];
+
+        $result = $this->db->get_where('list_gejala_kambuh', $data);
+
+        if ($result->num_rows() < 1) {
+            $this->db->insert('list_gejala_kambuh', $data);
+        } else {
+            $this->db->delete('list_gejala_kambuh', $data);
+        }
+
+        echo 'Gejala atau Tanda dipilih';
+    }
+
+    public function tabelgejalakambuh()
+    {
+        $fetch_data = $this->Beranda_model->make_datatables_gejala_kambuh();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($fetch_data as $row) {
+            $no++;
+            $sub_array = array();
+            if ($row->status >= 1) {
+                $sub_array[] = '
+                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
+                <a href="#" class="fa fa-info-circle fa-lg ml-2 mr-2 info" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Info"></a>
+                ';
+            } else {
+                $sub_array[] = '
+                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>';
+            }
+
+            $sub_array[] = $no;
+            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . $row->created_at . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . $row->updated_at . '</span><br>';
+
+
+            if ($row->hasil >= 6) {
+                $hasil = 'Cemas atau Depresi';
+                $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $hasil . '</span><br>';
+            } else {
+                $hasil = 'Normal';
+                $sub_array[] = '<span href="#" class="status badge badge-success" title="Normal" >' . $hasil . '</span><br>';
+            }
+            if ($row->status >= 1) {
+                $status = 'Selesai';
+                $sub_array[] = '<span href="#" class="status badge badge-success" title="Selesai" >' . $status . '</span><br>';
+            } else {
+                $status = 'Draft';
+                $sub_array[] = '<span href="#" class="status badge badge-secondary" title="Draft" >' . $status . '</span><br>';
+            }
+
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw"                => intval($_POST['draw']),
+            "recordsTotal"        => $this->Beranda_model->get_all_data_gejala_kambuh(),
+            "recordsFiltered"     => $this->Beranda_model->get_filtered_data_gejala_kambuh(),
+            "data"                => $data
+        );
+        echo json_encode($output);
+    }
+
     public function tabelkejiwaankeluarga()
     {
         $fetch_data = $this->Beranda_model->make_datatables_kejiwaan_keluarga();
@@ -129,30 +262,31 @@ class Beranda extends MX_Controller
             $sub_array = array();
             if ($row->status >= 1) {
                 $sub_array[] = '
-                <a href="#" class="fas fa-clipboard-check fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
+                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
                 <a href="#" class="fa fa-info-circle fa-lg ml-2 mr-2 info" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Info"></a>
                 ';
             } else {
                 $sub_array[] = '
-                <a href="#" class="fas fa-clipboard-check fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>';
+                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>';
             }
 
             $sub_array[] = $no;
-            $sub_array[] = '<span href="#" class="status badge badge-info" title="Diunggah" >' . $row->created_at . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . $row->updated_at . '</span><br>';
+            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . $row->created_at . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . $row->updated_at . '</span><br>';
 
-            if ($row->status >= 1) {
-                $status = 'Selesai';
-                $sub_array[] = '<span href="#" class="status badge badge-success" title="Selesai" >' . $status . '</span><br>';
-            } else {
-                $status = 'Draft';
-                $sub_array[] = '<span href="#" class="status badge badge-secondary" title="Draft" >' . $status . '</span><br>';
-            }
+
             if ($row->hasil >= 6) {
                 $hasil = 'Cemas atau Depresi';
                 $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $hasil . '</span><br>';
             } else {
                 $hasil = 'Normal';
                 $sub_array[] = '<span href="#" class="status badge badge-success" title="Normal" >' . $hasil . '</span><br>';
+            }
+            if ($row->status >= 1) {
+                $status = 'Selesai';
+                $sub_array[] = '<span href="#" class="status badge badge-success" title="Selesai" >' . $status . '</span><br>';
+            } else {
+                $status = 'Draft';
+                $sub_array[] = '<span href="#" class="status badge badge-secondary" title="Draft" >' . $status . '</span><br>';
             }
 
             $data[] = $sub_array;

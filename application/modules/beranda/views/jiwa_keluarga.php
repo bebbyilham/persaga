@@ -112,6 +112,9 @@
                   "ajax": {
                       "url": "<?php echo base_url(); ?>beranda/tabelkejiwaankeluarga",
                       "type": "POST",
+                      "data": function(data) {
+                          data.id_pasien = <?= $user['pasien_id'] ?>;
+                      },
                   },
                   columnDefs: [{
                       orderable: false,
@@ -128,7 +131,7 @@
                   var id_user = <?= $user['id_user'] ?>;
 
                   $.ajax({
-                      url: '<?php echo base_url(); ?>beranda/simpanjiwakeluarga',
+                      url: '<?php echo base_url(); ?>beranda/simpangejalakambuh',
                       method: 'POST',
                       dataType: 'JSON',
                       data: {
@@ -136,8 +139,8 @@
                           id_user: id_user,
                       },
                       success: function(data) {
-                          window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + data);
-
+                          console.log('simpan:', data);
+                          //   window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + data);
                       }
                   });
               });

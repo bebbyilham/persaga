@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2022 at 11:28 AM
+-- Generation Time: Apr 08, 2023 at 02:13 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `caregiver-database`
+-- Database: `persaga`
 --
 
 -- --------------------------------------------------------
@@ -57,7 +57,11 @@ INSERT INTO `aktivitas` (`id`, `id_pasien`, `id_rawatan`, `no_transaksi`, `makan
 (3, 1, 3, 'AP221115103429', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, '2022-11-15 15:34:39', '2022-11-15 15:34:39'),
 (4, 1, 3, 'AP221115103605', 2, 1, 1, 0, 2, 2, 2, 3, 3, 2, 1, '2022-11-15 15:36:05', NULL),
 (5, 1, 3, 'AP221115103904', 2, 1, 1, 1, 2, 2, 2, 3, 3, 2, 1, '2022-11-15 15:39:04', NULL),
-(6, 1, 3, 'AP221115104153', 2, 1, 1, 2, 2, 2, 2, 3, 3, 2, 1, '2022-11-15 15:41:53', NULL);
+(6, 1, 3, 'AP221115104153', 2, 1, 1, 2, 2, 2, 2, 3, 3, 2, 1, '2022-11-15 15:41:53', NULL),
+(7, 1, 3, 'AP221120064654', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, '2022-11-20 11:46:54', NULL),
+(8, 1, 3, 'AP221120064719', 2, 1, 1, 2, 2, 2, 2, 3, 3, 2, 1, '2022-11-20 11:47:19', NULL),
+(9, 1, 3, 'AP221120064814', 2, 1, 1, 2, 2, 2, 2, 3, 3, 2, 1, '2022-11-20 11:48:14', NULL),
+(10, 1, 3, 'AP221120064846', 2, 1, 1, 2, 2, 2, 2, 3, 3, 2, 1, '2022-11-20 11:48:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,6 +177,30 @@ INSERT INTO `dokter` (`id`, `kode`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `gejala_kambuh`
+--
+
+CREATE TABLE `gejala_kambuh` (
+  `id` int(11) NOT NULL,
+  `id_pasien` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `hasil` int(11) DEFAULT NULL,
+  `tahap` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `gejala_kambuh`
+--
+
+INSERT INTO `gejala_kambuh` (`id`, `id_pasien`, `id_user`, `hasil`, `tahap`, `status`, `created_at`, `updated_at`) VALUES
+(1, 0, 15, 4, 3, 1, '2023-04-08 04:53:53', '2023-04-08 07:45:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hasil_lab`
 --
 
@@ -253,7 +281,8 @@ CREATE TABLE `integritas_kulit` (
 
 INSERT INTO `integritas_kulit` (`id`, `id_pasien`, `id_rawatan`, `no_transaksi`, `image`, `file_name`, `kondisi_kulit`, `perawatan_kulit`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 3, 'CP221117082107', 'http://localhost/caregiver/assets/img/kulit/70f9fb956ba04d4d9fc5b8f7090dd6c8.jpeg', '70f9fb956ba04d4d9fc5b8f7090dd6c8.jpeg', 'tes1', 'tes2', 1, '2022-11-17 13:21:07', '2022-11-19 06:20:35'),
-(2, 1, 3, 'IK221119043406', 'http://localhost/caregiver/assets/img/kulit/f3f0c2dbc2104ca2672bf657e7fcfc6a.png', 'f3f0c2dbc2104ca2672bf657e7fcfc6a.png', 'Tes', 'tes', 99, '2022-11-19 09:34:06', '2022-11-19 10:24:22');
+(2, 1, 3, 'IK221119043406', 'http://localhost/caregiver/assets/img/kulit/f3f0c2dbc2104ca2672bf657e7fcfc6a.png', 'f3f0c2dbc2104ca2672bf657e7fcfc6a.png', 'Tes', 'tes', 99, '2022-11-19 09:34:06', '2022-11-19 10:24:22'),
+(3, 1, 3, 'IK221120105134', 'http://localhost/caregiver/assets/img/kulit/0c524dff614ad245af4498ae06a6ddc9.jpeg', '0c524dff614ad245af4498ae06a6ddc9.jpeg', 'Kondisi luka di punggung terdapat dekubitus grade III', 'TES 3', 1, '2022-11-20 03:51:34', '2022-11-20 05:45:09');
 
 -- --------------------------------------------------------
 
@@ -887,8 +916,11 @@ CREATE TABLE `keadaan` (
 --
 
 INSERT INTO `keadaan` (`id`, `id_pasien`, `id_rawatan`, `no_transaksi`, `keadaan_pasien_e`, `keadaan_pasien_v`, `keadaan_pasien_m`, `text_keadaan_pasien_e`, `text_keadaan_pasien_v`, `text_keadaan_pasien_m`, `keadaan_pasien_gjs`, `kesadaran`, `text_kesadaran`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 'KP221119040824', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 6, 1, '', 1, '2022-11-19 09:08:24', NULL),
-(2, 1, 3, 'KP221119042323', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 10, 4, 'STUPOR', 1, '2022-11-19 09:23:23', NULL);
+(1, 1, 3, 'KP221119040824', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 6, 1, 'COMPOS MENTIS', 1, '2022-11-19 09:08:24', '2022-11-20 04:59:24'),
+(2, 1, 3, 'KP221119042323', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 10, 4, 'STUPOR', 1, '2022-11-19 09:23:23', NULL),
+(3, 1, 3, 'KP221120065218', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 9, 1, 'COMPOS MENTIS', 1, '2022-11-20 11:52:18', NULL),
+(4, 1, 3, 'KP221120065224', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 9, 1, 'COMPOS MENTIS', 1, '2022-11-20 11:52:24', NULL),
+(5, 1, 3, 'KP221120065357', 4, 5, 6, 'Pasien membuka mata spontan', 'Pasien menjawab pertanyaan dengan benar', 'Pasien mengikuti perintah dengan benar', 15, 1, 'COMPOS MENTIS', 1, '2022-11-20 11:53:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -8005,6 +8037,34 @@ INSERT INTO `kecamatan` (`id_kec`, `id_kab`, `nama`) VALUES
 ('927108', '9271', 'Klaurung'),
 ('927109', '9271', 'Malaimsimsa'),
 ('927110', '9271', 'Maladum Mes');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kejiwaan_keluarga`
+--
+
+CREATE TABLE `kejiwaan_keluarga` (
+  `id` int(11) NOT NULL,
+  `id_pasien` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `hasil` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kejiwaan_keluarga`
+--
+
+INSERT INTO `kejiwaan_keluarga` (`id`, `id_pasien`, `id_user`, `hasil`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 10, 1, '2023-04-07 09:44:02', '2023-04-07 14:30:21'),
+(2, 0, 15, 2, 1, '2023-04-07 13:55:18', '2023-04-08 03:47:58'),
+(3, 0, 15, 11, 1, '2023-04-07 13:59:13', '2023-04-08 04:04:26'),
+(4, 0, 15, 8, 1, '2023-04-07 14:01:02', '2023-04-08 09:56:03'),
+(5, 0, 15, NULL, 0, '2023-04-07 14:01:44', NULL),
+(6, 0, 15, NULL, 0, '2023-04-07 14:59:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -90599,6 +90659,230 @@ INSERT INTO `kelurahan` (`id_kel`, `id_kec`, `nama`, `id_jenis`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `list_gejala_kambuh`
+--
+
+CREATE TABLE `list_gejala_kambuh` (
+  `id` int(11) NOT NULL,
+  `id_gejala_kambuh` int(11) NOT NULL,
+  `id_gejala_tanda` int(11) NOT NULL,
+  `tahap` int(11) NOT NULL,
+  `jawaban` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `list_gejala_kambuh`
+--
+
+INSERT INTO `list_gejala_kambuh` (`id`, `id_gejala_kambuh`, `id_gejala_tanda`, `tahap`, `jawaban`, `created_at`, `updated_at`) VALUES
+(6, 1, 1, 1, 1, '2023-04-08 07:28:53', NULL),
+(7, 1, 2, 1, 1, '2023-04-08 07:28:55', NULL),
+(8, 1, 13, 3, 1, '2023-04-08 07:29:03', NULL),
+(9, 1, 5, 2, 1, '2023-04-08 07:44:36', NULL),
+(10, 1, 3, 1, 1, '2023-04-08 09:52:21', NULL),
+(11, 1, 22, 4, 1, '2023-04-08 09:52:27', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list_kejiwaan_keluarga`
+--
+
+CREATE TABLE `list_kejiwaan_keluarga` (
+  `id` int(11) NOT NULL,
+  `id_kejiwaan_keluarga` int(11) NOT NULL,
+  `id_pertanyaan` int(11) NOT NULL,
+  `jawaban` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `list_kejiwaan_keluarga`
+--
+
+INSERT INTO `list_kejiwaan_keluarga` (`id`, `id_kejiwaan_keluarga`, `id_pertanyaan`, `jawaban`, `created_at`, `updated_at`) VALUES
+(22, 1, 2, 1, '2023-04-07 12:34:08', NULL),
+(23, 1, 3, 1, '2023-04-07 12:34:10', NULL),
+(24, 1, 4, 1, '2023-04-07 12:34:51', NULL),
+(25, 1, 5, 1, '2023-04-07 12:34:53', NULL),
+(26, 1, 6, 1, '2023-04-07 12:34:54', NULL),
+(27, 1, 7, 1, '2023-04-07 12:34:58', NULL),
+(28, 1, 8, 1, '2023-04-07 12:35:00', NULL),
+(29, 1, 9, 1, '2023-04-07 12:35:01', NULL),
+(30, 1, 10, 1, '2023-04-07 12:35:05', NULL),
+(32, 2, 1, 1, '2023-04-08 03:47:55', NULL),
+(33, 2, 2, 1, '2023-04-08 03:47:57', NULL),
+(34, 3, 1, 1, '2023-04-08 04:04:01', NULL),
+(35, 3, 2, 1, '2023-04-08 04:04:04', NULL),
+(36, 3, 3, 1, '2023-04-08 04:04:06', NULL),
+(37, 3, 4, 1, '2023-04-08 04:04:07', NULL),
+(38, 3, 5, 1, '2023-04-08 04:04:09', NULL),
+(39, 3, 6, 1, '2023-04-08 04:04:12', NULL),
+(40, 3, 7, 1, '2023-04-08 04:04:14', NULL),
+(41, 3, 8, 1, '2023-04-08 04:04:16', NULL),
+(42, 3, 9, 1, '2023-04-08 04:04:18', NULL),
+(43, 3, 10, 1, '2023-04-08 04:04:20', NULL),
+(44, 3, 11, 1, '2023-04-08 04:04:24', NULL),
+(45, 1, 1, 1, '2023-04-08 06:46:43', NULL),
+(46, 4, 3, 1, '2023-04-08 09:53:46', NULL),
+(47, 4, 7, 1, '2023-04-08 09:54:16', NULL),
+(48, 4, 8, 1, '2023-04-08 09:54:25', NULL),
+(49, 4, 10, 1, '2023-04-08 09:54:48', NULL),
+(50, 4, 12, 1, '2023-04-08 09:55:05', NULL),
+(51, 4, 18, 1, '2023-04-08 09:55:43', NULL),
+(52, 4, 19, 1, '2023-04-08 09:55:51', NULL),
+(53, 4, 20, 1, '2023-04-08 09:56:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master_pertanyaan_keluarga`
+--
+
+CREATE TABLE `master_pertanyaan_keluarga` (
+  `id` int(11) NOT NULL,
+  `pertanyaan` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `master_pertanyaan_keluarga`
+--
+
+INSERT INTO `master_pertanyaan_keluarga` (`id`, `pertanyaan`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Apakah Anda sering merasa sakit kepala?', 1, '2023-04-07 07:41:37', NULL),
+(2, 'Apakah Anda kehilangan nafsu makan?', 1, '2023-04-07 07:41:37', NULL),
+(3, 'Apakah tidur Anda tidak nyenyak?', 1, '2023-04-07 07:41:37', NULL),
+(4, 'Apakah Anda mudah merasa takut?', 1, '2023-04-07 07:41:37', NULL),
+(5, 'Apakah Anda merasa cemas, tegang, atau khawatir?', 1, '2023-04-07 07:41:37', '2023-04-07 07:43:05'),
+(6, 'Apakah tangan Anda gemetar?', 1, '2023-04-07 07:41:37', NULL),
+(7, 'Apakah Anda mengalami gangguan pencernaan? ', 1, '2023-04-07 07:41:37', NULL),
+(8, 'Apakah Anda merasa sulit berpikir jernih?', 1, '2023-04-07 07:41:37', NULL),
+(9, 'Apakah Anda merasa tidak bahagia?', 1, '2023-04-07 07:41:37', NULL),
+(10, 'Apakah Anda lebih sering menangis?', 1, '2023-04-07 07:41:37', NULL),
+(11, 'Apakah Anda merasa sulit untuk menikmati aktivitas sehari-hari?', 1, '2023-04-07 07:41:37', NULL),
+(12, 'Apakah Anda mengalami kesulitan untuk mengambil keputusan?', 1, '2023-04-07 07:41:37', NULL),
+(13, 'Apakah aktivitas/tugas sehari-hari Anda terbengkalai?', 1, '2023-04-07 07:41:37', NULL),
+(14, 'Apakah Anda merasa tidak mampu berperan dalam kehidupan ini?', 1, '2023-04-07 07:41:37', NULL),
+(15, 'Apakah Anda kehilangan minat terhadap banyak hal?', 1, '2023-04-07 07:41:37', NULL),
+(16, 'Apakah Anda merasa tidak berharga?', 1, '2023-04-07 07:41:37', NULL),
+(17, 'Apakah Anda mempunyai pikiran untuk mengakhiri hidup Anda?', 1, '2023-04-07 07:41:37', NULL),
+(18, 'Apakah Anda merasa lelah sepanjang waktu?', 1, '2023-04-07 07:41:37', NULL),
+(19, 'Apakah Anda merasa tidak enak di perut?', 1, '2023-04-07 07:41:37', NULL),
+(20, 'Apakah Anda mudah lelah?', 1, '2023-04-07 07:41:37', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master_tahap_kambuh`
+--
+
+CREATE TABLE `master_tahap_kambuh` (
+  `id` int(11) NOT NULL,
+  `id_tahap` int(11) NOT NULL,
+  `tahap_kambuh` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `master_tahap_kambuh`
+--
+
+INSERT INTO `master_tahap_kambuh` (`id`, `id_tahap`, `tahap_kambuh`, `created_at`, `updated_at`) VALUES
+(52, 1, 'Kambuh tahap 1 (Kewalahan Berlebihan)', '2023-04-08 07:59:28', NULL),
+(53, 2, 'Kambuh tahap 2 (Kesadaran yang Terbatas)', '2023-04-08 07:59:28', NULL),
+(54, 3, 'Kambuh tahap 3 (Hilangnya Kemampuan Mengendalikan Diri)', '2023-04-08 07:59:28', NULL),
+(55, 4, 'Kambuh tahap 4 (Hilangnya Kemampuan Secara Total dalam Mengendalikan Pikiran, Perasaan, dan Perilaku)', '2023-04-08 07:59:28', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master_tanda_gejala_pasien`
+--
+
+CREATE TABLE `master_tanda_gejala_pasien` (
+  `id` int(11) NOT NULL,
+  `tanda_gejala` text NOT NULL,
+  `tahap` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `master_tanda_gejala_pasien`
+--
+
+INSERT INTO `master_tanda_gejala_pasien` (`id`, `tanda_gejala`, `tahap`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Cemas berlebihan', 1, 1, '2023-04-07 07:52:46', NULL),
+(2, 'Cenderung melupakan kata-kata di tengah kalimat', 1, 1, '2023-04-07 07:52:46', NULL),
+(3, 'Tidak mampu berkonsentrasi/ perhatian mudah teralihkan', 1, 1, '2023-04-07 07:52:46', NULL),
+(4, 'Kemampuan menyelesaikan pekerjaan atau kegiatan berkurang', 1, 1, '2023-04-07 07:52:46', NULL),
+(5, 'Cemas semakin meningkat', 2, 1, '2023-04-07 07:52:46', NULL),
+(6, 'Mengalami depresi atau sedih berkepanjangan', 2, 1, '2023-04-07 07:52:46', NULL),
+(7, 'Merasa bosan', 2, 1, '2023-04-07 07:52:46', NULL),
+(8, 'Memikirkan hal tertentu berulang-ulang', 2, 1, '2023-04-07 07:52:46', NULL),
+(9, 'Acuh terhadap lingkungan', 2, 1, '2023-04-07 07:52:46', NULL),
+(10, 'Takut terhadap sesuatu secara berlebihan', 2, 1, '2023-04-07 07:52:46', NULL),
+(11, 'Merasa sakit fisik akibat tekanan psikologis', 2, 1, '2023-04-07 07:52:46', NULL),
+(12, 'Menarik diri (tidak mau bicara dengan orang lain/ tidak mau keluar rumah)', 2, 1, '2023-04-07 07:52:46', NULL),
+(13, 'Perubahan suasana hati/ perasaan gelisah', 3, 1, '2023-04-07 07:52:46', NULL),
+(14, 'Mengalami halusinasi', 3, 1, '2023-04-07 07:52:46', NULL),
+(15, 'Waham', 3, 1, '2023-04-07 07:52:46', NULL),
+(16, 'Sulit mengontrol emosi', 3, 1, '2023-04-07 07:52:46', NULL),
+(17, 'Halusinasi semakin parah dan tidak terkendali', 4, 1, '2023-04-07 07:52:46', NULL),
+(18, 'Waham semakin parah dan tidak terkendali', 4, 1, '2023-04-07 07:52:46', NULL),
+(19, 'Tidak lagi mengakui lingkungan atau orang terdekat', 4, 1, '2023-04-07 07:52:46', NULL),
+(20, 'Kehilangan identitas diri/ tidak mengenali dirinya sendiri', 4, 1, '2023-04-07 07:52:46', NULL),
+(21, 'Tidak mampu membedakan kenyataan', 4, 1, '2023-04-07 07:52:46', NULL),
+(22, 'Mengamuk', 4, 1, '2023-04-07 07:52:46', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master_tindakan_keluarga`
+--
+
+CREATE TABLE `master_tindakan_keluarga` (
+  `id` int(11) NOT NULL,
+  `id_tahap` int(11) NOT NULL,
+  `tindakan_keluarga` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `master_tindakan_keluarga`
+--
+
+INSERT INTO `master_tindakan_keluarga` (`id`, `id_tahap`, `tindakan_keluarga`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Periksa kembali apakah obat diminum secara teratur dan sesuai jadwal', '2023-04-08 08:10:36', NULL),
+(2, 1, 'Tingkatkan latihan mengendalikan gejala sesuai dengan yang telah dilatih di rumah sakit', '2023-04-08 08:10:36', NULL),
+(3, 1, 'Latih relaksasi (tarik nafas dalam) dan distraksi (mengalihkan perhatian)', '2023-04-08 08:10:36', NULL),
+(4, 1, 'Berikan kegiatan yang mudah dan cepat selesai', '2023-04-08 08:10:36', NULL),
+(5, 1, 'Lakukan pendampingan, pujian, dan motivasi dalam setiap melakukan kegiatan', '2023-04-08 08:10:36', NULL),
+(6, 2, 'Periksa kembali apakah obat diminum secara teratur dan sesuai jadwal', '2023-04-08 08:10:36', NULL),
+(7, 2, 'Tingkatkan latihan mengendalikan gejala sesuai dengan yang telah dilatih di rumah sakit', '2023-04-08 08:10:36', NULL),
+(8, 2, 'Latih relaksasi (tarik nafas dalam) dan distraksi (mengalihkan perhatian)', '2023-04-08 08:10:36', NULL),
+(9, 2, 'Ajak pasien melakukan kegiatan yang menyenangkan', '2023-04-08 08:10:36', NULL),
+(10, 2, 'Latih kemampuan bersosialisasi', '2023-04-08 08:10:36', NULL),
+(11, 2, 'Lakukan pendampingan, pujian, dan motivasi dalam setiap melakukan kegiatan', '2023-04-08 08:10:36', NULL),
+(12, 3, 'Periksa kembali apakah obat diminum secara teratur dan sesuai jadwal', '2023-04-08 08:10:36', NULL),
+(13, 3, 'Tingkatkan latihan mengendalikan gejala sesuai dengan yang telah dilatih di rumah sakit', '2023-04-08 08:10:36', NULL),
+(14, 3, 'Latih relaksasi (tarik nafas dalam) dan distraksi (mengalihkan perhatian)', '2023-04-08 08:10:36', NULL),
+(15, 3, 'Lakukan pendampingan, pujian, dan motivasi dalam setiap melakukan kegiatan', '2023-04-08 08:10:36', NULL),
+(16, 3, 'Konsultasikan ke pelayanan kesehatan terdekat untuk mendapatkan penanganan', '2023-04-08 08:10:36', NULL),
+(17, 4, 'Segera rujuk ke rumah sakit jiwa untuk mendapatkan pengobatan dan perawatan', '2023-04-08 08:10:36', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `medikasi`
 --
 
@@ -90653,6 +90937,7 @@ CREATE TABLE `pasien` (
   `id` int(11) NOT NULL,
   `nama` varchar(256) NOT NULL,
   `nik` int(50) NOT NULL,
+  `no_mr` varchar(11) NOT NULL,
   `jenis_kelamin` int(1) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `alamat` text NOT NULL,
@@ -90660,6 +90945,7 @@ CREATE TABLE `pasien` (
   `notelp2` int(13) NOT NULL,
   `nama_pj` varchar(256) NOT NULL,
   `notelp3` int(11) NOT NULL,
+  `call_ambulance` varchar(256) DEFAULT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
@@ -90669,8 +90955,10 @@ CREATE TABLE `pasien` (
 -- Dumping data for table `pasien`
 --
 
-INSERT INTO `pasien` (`id`, `nama`, `nik`, `jenis_kelamin`, `tanggal_lahir`, `alamat`, `notelp1`, `notelp2`, `nama_pj`, `notelp3`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Bebby Ilham Akbar Aresta', 17012006, 1, '1998-06-20', 'Jl. Gn. Sago No 14, Gunung Panggilun, Padang Utara.', 822, 822, 'Budi', 822, 1, '2022-11-13 08:53:56', '2022-11-16 14:38:43');
+INSERT INTO `pasien` (`id`, `nama`, `nik`, `no_mr`, `jenis_kelamin`, `tanggal_lahir`, `alamat`, `notelp1`, `notelp2`, `nama_pj`, `notelp3`, `call_ambulance`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Bebby Ilham Akbar Aresta', 17012006, '000001', 1, '1998-06-20', 'Jl. Gn. Sago No 14, Gunung Panggilun, Padang Utara.', 822, 822, 'Budi', 822, NULL, 1, '2022-11-13 08:53:56', '2022-11-19 14:10:36'),
+(3, 'Budi', 15720999, '000002', 1, '1998-11-19', 'Jl. Yos Sudarso', 877778888, 822233333, 'Bayu', 82233344, NULL, 1, '2022-11-19 14:06:41', '2022-11-19 14:10:40'),
+(4, 'Tes A 12', 0, '000003', 1, '2022-11-20', 'Jl. Yos Sudarso', 8225555, 8225555, 'Bayu', 8225555, NULL, 1, '2022-11-20 09:11:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -90753,6 +91041,7 @@ CREATE TABLE `rawatan` (
   `no_transaksi` varchar(256) NOT NULL,
   `tgl_awal_rawatan` date NOT NULL,
   `tgl_akhir_rawatan` int(11) DEFAULT NULL,
+  `tgl_kontrol_` date DEFAULT NULL,
   `diagnosa_sakit` text NOT NULL,
   `alergi` text DEFAULT NULL,
   `barthel_index_score` double DEFAULT NULL,
@@ -90766,9 +91055,9 @@ CREATE TABLE `rawatan` (
 -- Dumping data for table `rawatan`
 --
 
-INSERT INTO `rawatan` (`id`, `id_pasien`, `no_transaksi`, `tgl_awal_rawatan`, `tgl_akhir_rawatan`, `diagnosa_sakit`, `alergi`, `barthel_index_score`, `barthel_index_score_date`, `status`, `created_at`, `updated_at`) VALUES
-(3, 1, 'CG221114082143', '2022-11-14', NULL, 'stroke', 'kulit', 46, '2022-11-14', 1, '2022-11-14 13:21:43', NULL),
-(4, 1, 'CG221114082319', '2022-11-14', NULL, 'stroke ringan', 'kulit', 46, '2022-11-14', 1, '2022-11-14 13:23:19', '2022-11-14 13:36:28');
+INSERT INTO `rawatan` (`id`, `id_pasien`, `no_transaksi`, `tgl_awal_rawatan`, `tgl_akhir_rawatan`, `tgl_kontrol_`, `diagnosa_sakit`, `alergi`, `barthel_index_score`, `barthel_index_score_date`, `status`, `created_at`, `updated_at`) VALUES
+(3, 1, 'CG221114082143', '2022-11-14', NULL, NULL, 'stroke', 'kulit', 20, '2022-11-20', 1, '2022-11-14 13:21:43', '2022-11-20 11:48:46'),
+(4, 1, 'CG221114082319', '2022-11-14', NULL, NULL, 'stroke ringan', 'kulit', 20, '2022-11-14', 1, '2022-11-14 13:23:19', '2022-11-20 12:09:14');
 
 -- --------------------------------------------------------
 
@@ -91348,7 +91637,7 @@ CREATE TABLE `tanda_vital` (
 --
 
 INSERT INTO `tanda_vital` (`id`, `id_pasien`, `id_rawatan`, `no_transaksi`, `sistolik`, `diastolik`, `suhu`, `nadi`, `pernapasan`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 'TV221116081317', 90, 59, 37.5, 100, 19, 1, '2022-11-16 13:13:17', '2022-11-16 13:35:20');
+(1, 1, 3, 'TV221116081317', 120, 80, 37.5, 80, 19, 1, '2022-11-16 13:13:17', '2022-11-20 05:47:15');
 
 -- --------------------------------------------------------
 
@@ -91389,7 +91678,15 @@ INSERT INTO `transaksi` (`id`, `id_pasien`, `no_transaksi`, `status`, `created_a
 (19, 1, 'KP221119042323', 1, '2022-11-19 09:23:23', NULL),
 (20, 1, 'IK221119043406', 1, '2022-11-19 09:34:06', NULL),
 (21, 1, 'HL221119051205', 1, '2022-11-19 10:12:05', NULL),
-(22, 1, 'HL221119052349', 1, '2022-11-19 10:23:49', NULL);
+(22, 1, 'HL221119052349', 1, '2022-11-19 10:23:49', NULL),
+(23, 1, 'IK221120105134', 1, '2022-11-20 03:51:34', NULL),
+(24, 1, 'AP221120064654', 1, '2022-11-20 11:46:54', NULL),
+(25, 1, 'AP221120064719', 1, '2022-11-20 11:47:19', NULL),
+(26, 1, 'AP221120064814', 1, '2022-11-20 11:48:14', NULL),
+(27, 1, 'AP221120064846', 1, '2022-11-20 11:48:46', NULL),
+(28, 1, 'KP221120065218', 1, '2022-11-20 11:52:18', NULL),
+(29, 1, 'KP221120065224', 1, '2022-11-20 11:52:24', NULL),
+(30, 1, 'KP221120065357', 1, '2022-11-20 11:53:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -91401,6 +91698,7 @@ CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
   `pegawai_id` int(11) DEFAULT NULL,
+  `pasien_id` int(11) DEFAULT NULL,
   `username` varchar(256) DEFAULT NULL,
   `password` varchar(256) DEFAULT NULL,
   `nama_akun` varchar(256) DEFAULT NULL,
@@ -91413,12 +91711,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `role_id`, `pegawai_id`, `username`, `password`, `nama_akun`, `image`, `is_active`, `createdAt`) VALUES
-(15, 1, 55, 'bebby', '$2y$10$dZYoj/1j642py6MjIBY7EeaejHhPFkj1FavDCjvLypn4zzqvFG0Da', 'Bebby Ilham S. Kom', 'default.png', 1, '2022-06-30 08:17:29'),
-(65, 40, 138, 'elyasespa', '$2y$10$wdCUPh0Ich5eW1yOhioKS.MDGjr74cmPapD1QMBUBqYUphdlVHiM6', ' Elya Sespa ', 'default.png', 1, '2022-11-19 04:51:32'),
-(66, 39, 236, 'kaprianatanty', '$2y$10$tL1GovHlG8Dwn1aVjpJJfOlJNrQSomkhfR13DPPCxw/wYcU68otgC', ' Kapriana Tanty Natalia ', 'default.png', 1, '2022-11-19 04:25:04'),
-(67, 39, 235, 'pastikurnia', '$2y$10$HuHATrmNtTmDCTE85RYBmO0Jv4dKbcF3BdbObgDT96bOpjQIG1vX.', ' Pasti Kurnia ', 'default.png', 1, '2022-11-19 04:28:18'),
-(68, 40, 237, 'admin', '$2y$10$I/uOYUyDWXBze4Y.UuTVOedCxm9Lr00Q.j4aBSQKOjIzzKEtMun8C', ' Administrator ', 'default.png', 1, '2022-11-19 04:53:46');
+INSERT INTO `user` (`id_user`, `role_id`, `pegawai_id`, `pasien_id`, `username`, `password`, `nama_akun`, `image`, `is_active`, `createdAt`) VALUES
+(15, 1, 55, 0, 'bebby', '$2y$10$dZYoj/1j642py6MjIBY7EeaejHhPFkj1FavDCjvLypn4zzqvFG0Da', 'Bebby Ilham S. Kom', 'default.png', 1, '2023-04-07 13:55:07'),
+(65, 40, 138, NULL, 'elyasespa', '$2y$10$wdCUPh0Ich5eW1yOhioKS.MDGjr74cmPapD1QMBUBqYUphdlVHiM6', ' Elya Sespa ', 'default.png', 1, '2022-11-19 04:51:32'),
+(66, 39, 236, NULL, 'kaprianatanty', '$2y$10$tL1GovHlG8Dwn1aVjpJJfOlJNrQSomkhfR13DPPCxw/wYcU68otgC', ' Kapriana Tanty Natalia ', 'default.png', 1, '2022-11-19 04:25:04'),
+(67, 39, 235, NULL, 'pastikurnia', '$2y$10$HuHATrmNtTmDCTE85RYBmO0Jv4dKbcF3BdbObgDT96bOpjQIG1vX.', ' Pasti Kurnia ', 'default.png', 1, '2022-11-19 04:28:18'),
+(68, 40, 237, NULL, 'admin', '$2y$10$I/uOYUyDWXBze4Y.UuTVOedCxm9Lr00Q.j4aBSQKOjIzzKEtMun8C', ' Administrator ', 'default.png', 1, '2022-11-19 04:53:46');
 
 -- --------------------------------------------------------
 
@@ -91438,14 +91736,16 @@ CREATE TABLE `user_access_menu` (
 
 INSERT INTO `user_access_menu` (`id`, `role_id`, `menu_id`) VALUES
 (1, 1, 1),
-(201, 1, 2),
-(204, 1, 43),
 (205, 1, 42),
 (206, 39, 1),
 (207, 39, 43),
 (208, 1, 44),
 (209, 40, 1),
-(211, 40, 44);
+(211, 40, 44),
+(212, 41, 45),
+(213, 41, 1),
+(214, 1, 2),
+(215, 1, 45);
 
 -- --------------------------------------------------------
 
@@ -91467,8 +91767,8 @@ INSERT INTO `user_menu` (`id`, `menu`, `deskripsi`) VALUES
 (1, 'User', 'Profile'),
 (2, 'Admin', 'Admin'),
 (42, 'Blog', 'Blog'),
-(43, 'Pasien', 'Pasien'),
-(44, 'Administrator', 'Administrator');
+(44, 'Administrator', 'Administrator'),
+(45, 'Beranda', 'Beranda');
 
 -- --------------------------------------------------------
 
@@ -91489,7 +91789,8 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` (`id`, `role`, `createdAt`) VALUES
 (1, 'Admin', '2021-09-21 02:29:22'),
 (39, 'Perawat', '2022-11-17 13:52:20'),
-(40, 'Administrator', '2022-11-19 04:47:41');
+(40, 'Administrator', '2022-11-19 04:47:41'),
+(41, 'Pasien', '2023-04-07 06:41:06');
 
 -- --------------------------------------------------------
 
@@ -91639,7 +91940,10 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (1078, 43, 'Pasien Terdaftar', 'pasien/pasienterdaftar', 'nav-icon fas fa-users', 1),
 (1079, 43, 'Pasien Rawatan', 'pasien/rawatan', 'nav-icon fas fa-bed', 1),
 (1080, 44, 'Pegawai', 'administrator/pegawai', 'nav-icon fas fa-user-plus', 1),
-(1081, 44, 'Referensi', 'administrator/referensi', 'nav-icon fas fa-book', 1);
+(1081, 44, 'Referensi', 'administrator/referensi', 'nav-icon fas fa-book', 1),
+(1082, 45, 'Dashboard', 'beranda', 'nav-icon fas fa-tachometer-alt', 1),
+(1083, 45, 'Deteksi Dini Gejala Kambuh', 'beranda/gejalakambuh', 'nav-icon fas fa-stethoscope', 1),
+(1084, 45, 'Kesehatan Jiwa Keluarga', 'beranda/jiwakeluarga', 'nav-icon fas fa-stethoscope', 1);
 
 --
 -- Indexes for dumped tables
@@ -91665,6 +91969,12 @@ ALTER TABLE `catatan_perkembangan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `gejala_kambuh`
+--
+ALTER TABLE `gejala_kambuh`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `hasil_lab`
 --
 ALTER TABLE `hasil_lab`
@@ -91687,6 +91997,48 @@ ALTER TABLE `integritas_kulit`
 -- Indexes for table `keadaan`
 --
 ALTER TABLE `keadaan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kejiwaan_keluarga`
+--
+ALTER TABLE `kejiwaan_keluarga`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `list_gejala_kambuh`
+--
+ALTER TABLE `list_gejala_kambuh`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `list_kejiwaan_keluarga`
+--
+ALTER TABLE `list_kejiwaan_keluarga`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `master_pertanyaan_keluarga`
+--
+ALTER TABLE `master_pertanyaan_keluarga`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `master_tahap_kambuh`
+--
+ALTER TABLE `master_tahap_kambuh`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `master_tanda_gejala_pasien`
+--
+ALTER TABLE `master_tanda_gejala_pasien`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `master_tindakan_keluarga`
+--
+ALTER TABLE `master_tindakan_keluarga`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -91882,7 +92234,7 @@ ALTER TABLE `user_sub_menu`
 -- AUTO_INCREMENT for table `aktivitas`
 --
 ALTER TABLE `aktivitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `blogs`
@@ -91895,6 +92247,12 @@ ALTER TABLE `blogs`
 --
 ALTER TABLE `catatan_perkembangan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `gejala_kambuh`
+--
+ALTER TABLE `gejala_kambuh`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `hasil_lab`
@@ -91912,13 +92270,55 @@ ALTER TABLE `image_blogs`
 -- AUTO_INCREMENT for table `integritas_kulit`
 --
 ALTER TABLE `integritas_kulit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `keadaan`
 --
 ALTER TABLE `keadaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `kejiwaan_keluarga`
+--
+ALTER TABLE `kejiwaan_keluarga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `list_gejala_kambuh`
+--
+ALTER TABLE `list_gejala_kambuh`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `list_kejiwaan_keluarga`
+--
+ALTER TABLE `list_kejiwaan_keluarga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT for table `master_pertanyaan_keluarga`
+--
+ALTER TABLE `master_pertanyaan_keluarga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `master_tahap_kambuh`
+--
+ALTER TABLE `master_tahap_kambuh`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
+-- AUTO_INCREMENT for table `master_tanda_gejala_pasien`
+--
+ALTER TABLE `master_tanda_gejala_pasien`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `master_tindakan_keluarga`
+--
+ALTER TABLE `master_tindakan_keluarga`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `medikasi`
@@ -91930,7 +92330,7 @@ ALTER TABLE `medikasi`
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -92068,7 +92468,7 @@ ALTER TABLE `tanda_vital`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -92080,25 +92480,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 
 --
 -- AUTO_INCREMENT for table `user_menu`
 --
 ALTER TABLE `user_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1082;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1085;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

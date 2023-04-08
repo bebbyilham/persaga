@@ -47,3 +47,16 @@ function check_pertanyaan_keluarga($id, $id_pertanyaan)
         return "checked='checked'";
     }
 }
+
+function check_gejala_tanda($id, $id_gejala_tanda)
+{
+    $ci = get_instance();
+
+    $ci->db->where('id_gejala_kambuh', $id);
+    $ci->db->where('id_gejala_tanda', $id_gejala_tanda);
+    $result = $ci->db->get('list_gejala_kambuh');
+
+    if ($result->num_rows() > 0) {
+        return "checked='checked'";
+    }
+}

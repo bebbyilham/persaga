@@ -7,15 +7,8 @@
                       <h6 class="h2 text-white d-inline-block mb-0"><?= $title; ?></h6>
                   </div>
                   <div class="col-lg-6 col-5 text-right">
-                      <a href="<?php echo base_url(); ?>blog/tambahblog" class="tambah_blog btn btn-sm btn-neutral">Tambah</a>
+                      <a href="#" id="tambah_pemeriksaan" class="tambah btn btn-sm btn-neutral">Tambah</a>
                   </div>
-              </div>
-              <!-- Card stats -->
-              <div class="row">
-
-
-
-
               </div>
           </div>
       </div>
@@ -34,15 +27,14 @@
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
-                          <table id="tabel_blog" class="table table-hover table-sm display">
+                          <table id="tabel_gejala_kambuh" class="table table-hover table-sm display">
                               <thead>
                                   <tr>
-                                      <th style="width: 5%;">No.</th>
-                                      <th style="width: 25%;">Blog</th>
-                                      <th style="width: 40%;">Deskripsi</th>
-                                      <th style="width: 10%;">Status</th>
+                                      <th class="text-center" style="width: 1%;">#</th>
+                                      <th style="width: 2%;">No.</th>
                                       <th style="width: 10%;">Tanggal</th>
-                                      <th class="text-center" style="width: 10%;">#</th>
+                                      <th style="width: 10%;">Hasil</th>
+                                      <th style="width: 10%;">Status</th>
                                   </tr>
                               </thead>
                           </table>
@@ -51,48 +43,60 @@
               </div>
           </div>
       </div>
-      <!-- Modal Create User -->
-      <div class="modal fade" id="modal_tambah_blog" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
+      <!-- Modal  -->
+      <div class="modal fade" id="modal-hasil-depresi" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-danger modal-xl modal-dialog-centered modal-" role="document">
+              <div class="modal-content bg-gradient-danger">
                   <div class="modal-header">
-                      <h4 class="modal-title text-primary"></h4>
+                      <h6 class="modal-title" id="modal-title-notification">Hasil</h6>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
+                          <span aria-hidden="true">×</span>
                       </button>
                   </div>
-                  <form method="post" id="tambah_user">
-                      <div class="modal-body">
-                          <input type="hidden" name="pegawai_id" id="pegawai_id">
-                          <input type="hidden" id="id_user" name="id_user">
-                          <input type="hidden" name="action_modal" id="action_modal" value="edit">
-                          <input type="hidden" name="nama_akun" id="nama_akun">
-                          <div class="form-group">
-                              <label for="judul">Judul</label>
-                              <input type="text" class="form-control rounded-0" id="judul" name="judul" placeholder="Judul">
-                              <small><span class="text-danger" id="error_judul"></span></small>
-                          </div>
-                          <div class="form-group">
-                              <label for="password">Password</label>
-                              <input type="password" class="form-control rounded-0" id="password" name="password" placeholder="Password">
-                              <small><span class="text-danger" id="error_password"></span></small>
-                          </div>
-                          <div class="form-group">
-                              <label for="password2">Ulangi Password</label>
-                              <input type="password" class="form-control rounded-0" id="password2" name="password2" placeholder="Ulangi Password">
-                              <small><span class="text-danger" id="error_password2"></span></small>
-                          </div>
-                          <div class="form-group">
-                              <label for="role_id">Role</label>
-                              <select class="custom-select rounded-0" id="role_id" name="role_id"></select>
-                              <small><span class="text-danger" id="error_role_id"></span></small>
-                          </div>
+                  <div class="modal-body">
+                      <div class="py-3 text-center">
+                          <i class="fas fa-tired fa-10x"></i>
+                          <h3 class="heading mt-4">TERDAPAT MASALAH PSIKOLOGIS SEPERTI (CEMAS ATAU DEPRESI)</h3>
+                          <h4 class="heading mt-4">Tindakan yang dapat dilakukan keluarga</h4>
                       </div>
-                      <div class="modal-footer justify-content-between">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                          <button type="submit" class="btn btn-primary">Submit</button>
+                      <div class="list-group">
+                          <a href="#" class="list-group-item list-group-item-action">
+                              1. Kaji penyebab masalah psikologis (cemas atau depresi) yang dirasakan
+                          </a>
+                          <a href="#" class="list-group-item list-group-item-action">2. Lakukan upaya untuk mengatasi atau menghindari hal-hal yang menyebabkan cemas atau depresi yang dialami</a>
+                          <a href="#" class="list-group-item list-group-item-action">3. Lakukan latihan relaksasi tarik nafas dalam</a>
+                          <a href="#" class="list-group-item list-group-item-action">4. Lakukan distraksi atau pengalihan perhatian</a>
+                          <a href="#" class="list-group-item list-group-item-action">5. Lakukan latihan hipnosis 5 jari</a>
+                          <a href="#" class="list-group-item list-group-item-action">6. Lakukan latihan relaksasi otot progresif</a>
+                          <a href="#" class="list-group-item list-group-item-action">7. Lakukan latihan spiritual</a>
+                          <a href="#" class="list-group-item list-group-item-action">8. Segera konsultasi ke pelayanan kesehatan terdekat apabila gejala tidak berkurang</a>
                       </div>
-                  </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-white">Kembali</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal fade" id="modal-hasil-normal" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-success modal-dialog-centered modal-" role="document">
+              <div class="modal-content bg-gradient-success">
+                  <div class="modal-header">
+                      <h6 class="modal-title" id="modal-title-notification">Hasil</h6>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="py-3 text-center">
+                          <i class="fas fa-smile fa-10x"></i>
+                          <h3 class="heading mt-4">KONDISI KELUARGA NORMAL</h3>
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-white">Kembali</button>
+                  </div>
               </div>
           </div>
       </div>
@@ -100,18 +104,21 @@
           $(document).ready(function() {
               $('#loading').hide();
               // DataTable
-              var dataTable = $('#tabel_blog').DataTable({
+              var dataTable = $('#tabel_gejala_kambuh').DataTable({
                   "serverSide": true,
                   "responsive": true,
                   "pageLength": 25,
                   "order": [],
                   "ajax": {
-                      "url": "<?php echo base_url(); ?>blog/tabelblog",
+                      "url": "<?php echo base_url(); ?>beranda/tabelgejalakambuh",
                       "type": "POST",
+                      "data": function(data) {
+                          data.id_pasien = <?= $user['pasien_id'] ?>;
+                      },
                   },
                   columnDefs: [{
                       orderable: false,
-                      targets: [0, 2, 5]
+                      targets: [0, 1, 2, 3, 4]
                   }],
                   autoWidth: !1,
                   language: {
@@ -119,49 +126,40 @@
                   },
               });
 
-              // image blog
-              $(document).on('click', '.imageblog', function() {
-                  var id = $(this).attr('id');
-                  window.open('<?= base_url(); ?>blog/imageblog/' + id);
+              $(document).on('click', '#tambah_pemeriksaan', function() {
+                  var id_pasien = <?= $user['pasien_id'] ?>;
+                  var id_user = <?= $user['id_user'] ?>;
+
+                  $.ajax({
+                      url: '<?php echo base_url(); ?>beranda/simpangejalakambuh',
+                      method: 'POST',
+                      dataType: 'JSON',
+                      data: {
+                          id_pasien: id_pasien,
+                          id_user: id_user,
+                      },
+                      success: function(data) {
+                          console.log(data);
+                          //   window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + data);
+                      }
+                  });
               });
 
-              $(document).on("click", ".ubahstatus", function() {
+              $(document).on("click", ".info", function() {
                   let id = $(this).attr('id')
-                  let status = $(this).attr('status')
-                  Swal.fire({
-                      title: 'Apakah Kamu Yakin?',
-                      text: "Upload file nilai ini?",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      cancelButtonText: 'Batal',
-                      confirmButtonText: 'Ya, Saya Yakin'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          $.ajax({
-                              url: '<?php echo base_url(); ?>blog/ubahstatusblog',
-                              method: 'POST',
-                              data: {
-                                  id: id,
-                                  status: status
-                              },
-                              success: function(data) {
-                                  // console.log(data);
-                                  Swal.fire({
-                                      icon: 'success',
-                                      title: 'Status berhasil diubah',
-                                      showConfirmButton: false,
-                                      timer: 1500
-                                  })
-                                  dataTable.ajax.reload();
-                              }
-                          });
-                      }
-                  })
-
+                  let hasil = $(this).attr('hasil')
+                  if (hasil >= 6) {
+                      $('#modal-hasil-depresi').modal('show');
+                  } else {
+                      $('#modal-hasil-normal').modal('show');
+                  }
               })
 
+              $(document).on("click", ".cek", function() {
+                  let id = $(this).attr('id');
+                  dataTable.ajax.reload();
+                  window.open('<?= base_url(); ?>beranda/formgejalakambuh/' + id);
+              })
 
           });
       </script>

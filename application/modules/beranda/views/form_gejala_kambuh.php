@@ -115,7 +115,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <a href="<?= base_url(); ?>beranda/jiwakeluarga/" type="button" class="btn btn-white">Kembali</a>
+          <a href="<?= base_url(); ?>beranda/gejalakambuh/" type="button" class="btn btn-white">Kembali</a>
         </div>
       </div>
     </div>

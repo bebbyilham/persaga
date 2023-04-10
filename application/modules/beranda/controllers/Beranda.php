@@ -166,6 +166,29 @@ class Beranda extends MX_Controller
             'hasil'     => $hasil,
             'tahap'     => $tahap['tahap']
         );
+        $this->Beranda_model->simpan_gejala_kambuh_pasien($id_gejala_kambuh, $data);
+        $id_tahap = $tahap['tahap'];
+        $hasiltahap = $this->db->get_where('master_tahap_kambuh', ['id_tahap' => $id_tahap])->row_array();
+        $hasiltindakan = $this->db->get_where('master_tindakan_keluarga', ['id_tahap' => $id_tahap])->result_array();
+
+        $message = [
+            'hasiltahap' => $hasiltahap,
+            'hasiltindakan' => $hasiltindakan
+        ];
+        echo json_encode($message);
+    }
+
+    public function infogejalakambuhpasien()
+    {
+        $id_gejala_kambuh = $_POST['id_gejala_kambuh'];
+        // $hasil = $this->db->get_where('list_gejala_kambuh', ['id_gejala_kambuh' => $id_gejala_kambuh])->num_rows();
+        $tahap = $this->db->limit(1)->order_by('tahap', 'DESC')->get_where('list_gejala_kambuh', ['id_gejala_kambuh' => $id_gejala_kambuh])->row_array();
+
+        // $data = array(
+        //     'status'    => $_POST['status'],
+        //     'hasil'     => $hasil,
+        //     'tahap'     => $tahap['tahap']
+        // );
         // $this->Beranda_model->simpan_gejala_kambuh_pasien($id_gejala_kambuh, $data);
         $id_tahap = $tahap['tahap'];
         $hasiltahap = $this->db->get_where('master_tahap_kambuh', ['id_tahap' => $id_tahap])->row_array();
@@ -225,13 +248,7 @@ class Beranda extends MX_Controller
             $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . $row->created_at . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . $row->updated_at . '</span><br>';
 
 
-            if ($row->hasil >= 6) {
-                $hasil = 'Cemas atau Depresi';
-                $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $hasil . '</span><br>';
-            } else {
-                $hasil = 'Normal';
-                $sub_array[] = '<span href="#" class="status badge badge-success" title="Normal" >' . $hasil . '</span><br>';
-            }
+            $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $row->tahap_kambuh . '</span><br>';
             if ($row->status >= 1) {
                 $status = 'Selesai';
                 $sub_array[] = '<span href="#" class="status badge badge-success" title="Selesai" >' . $status . '</span><br>';

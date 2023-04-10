@@ -131,7 +131,7 @@
                   var id_user = <?= $user['id_user'] ?>;
 
                   $.ajax({
-                      url: '<?php echo base_url(); ?>beranda/simpangejalakambuh',
+                      url: '<?php echo base_url(); ?>beranda/simpanjiwakeluarga',
                       method: 'POST',
                       dataType: 'JSON',
                       data: {
@@ -139,8 +139,9 @@
                           id_user: id_user,
                       },
                       success: function(data) {
-                          console.log('simpan:', data);
-                          //   window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + data);
+                          //   console.log('simpan:', data);
+                          dataTable.ajax.reload();
+                          window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + data);
                       }
                   });
               });

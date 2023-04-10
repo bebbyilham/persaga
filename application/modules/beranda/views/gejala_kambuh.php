@@ -56,46 +56,14 @@
                   <div class="modal-body">
                       <div class="py-3 text-center">
                           <i class="fas fa-tired fa-10x"></i>
-                          <h3 class="heading mt-4">TERDAPAT MASALAH PSIKOLOGIS SEPERTI (CEMAS ATAU DEPRESI)</h3>
+                          <h1 class="heading mt-4 tahapkambuh"></h1>
                           <h4 class="heading mt-4">Tindakan yang dapat dilakukan keluarga</h4>
                       </div>
-                      <div class="list-group">
-                          <a href="#" class="list-group-item list-group-item-action">
-                              1. Kaji penyebab masalah psikologis (cemas atau depresi) yang dirasakan
-                          </a>
-                          <a href="#" class="list-group-item list-group-item-action">2. Lakukan upaya untuk mengatasi atau menghindari hal-hal yang menyebabkan cemas atau depresi yang dialami</a>
-                          <a href="#" class="list-group-item list-group-item-action">3. Lakukan latihan relaksasi tarik nafas dalam</a>
-                          <a href="#" class="list-group-item list-group-item-action">4. Lakukan distraksi atau pengalihan perhatian</a>
-                          <a href="#" class="list-group-item list-group-item-action">5. Lakukan latihan hipnosis 5 jari</a>
-                          <a href="#" class="list-group-item list-group-item-action">6. Lakukan latihan relaksasi otot progresif</a>
-                          <a href="#" class="list-group-item list-group-item-action">7. Lakukan latihan spiritual</a>
-                          <a href="#" class="list-group-item list-group-item-action">8. Segera konsultasi ke pelayanan kesehatan terdekat apabila gejala tidak berkurang</a>
+                      <div class="list-group datatindakan">
                       </div>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-white">Kembali</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="modal fade" id="modal-hasil-normal" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-          <div class="modal-dialog modal-success modal-dialog-centered modal-" role="document">
-              <div class="modal-content bg-gradient-success">
-                  <div class="modal-header">
-                      <h6 class="modal-title" id="modal-title-notification">Hasil</h6>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <div class="py-3 text-center">
-                          <i class="fas fa-smile fa-10x"></i>
-                          <h3 class="heading mt-4">KONDISI KELUARGA NORMAL</h3>
-                      </div>
-
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-white">Kembali</button>
+                      <a href="<?= base_url(); ?>beranda/gejalakambuh/" type="button" class="btn btn-white">Kembali</a>
                   </div>
               </div>
           </div>
@@ -139,20 +107,64 @@
                           id_user: id_user,
                       },
                       success: function(data) {
-                          console.log(data);
-                          //   window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + data);
+                          //   console.log(data);
+                          dataTable.ajax.reload();
+                          window.open('<?= base_url(); ?>beranda/formgejalakambuh/' + data);
                       }
                   });
               });
 
               $(document).on("click", ".info", function() {
-                  let id = $(this).attr('id')
+                  let id_gejala_kambuh = $(this).attr('id')
                   let hasil = $(this).attr('hasil')
-                  if (hasil >= 6) {
-                      $('#modal-hasil-depresi').modal('show');
-                  } else {
-                      $('#modal-hasil-normal').modal('show');
-                  }
+                  //   if (hasil >= 6) {
+                  //       $('#modal-hasil-depresi').modal('show');
+                  //   } else {
+                  //       $('#modal-hasil-normal').modal('show');
+                  //   }
+                  $.ajax({
+                      url: '<?php echo base_url(); ?>beranda/infogejalakambuhpasien',
+                      method: 'POST',
+                      dataType: 'JSON',
+                      data: {
+                          id_gejala_kambuh: id_gejala_kambuh,
+                      },
+                      success: function(data) {
+                          console.log(data);
+                          $('#modal-hasil-depresi').modal('show');
+                          var hasiltahap = data['hasiltahap']['tahap_kambuh'];
+                          // console.log(hasiltahap);
+                          $('.tahapkambuh').text(hasiltahap);
+
+                          if (data['hasiltindakan']) {
+                              var hasiltindakan = data['hasiltindakan'];
+                              var no = 1
+                              $.each(hasiltindakan, function(i, result) {
+                                  $('.datatindakan').append(
+                                      `
+                  <a href="#" class="list-group-item list-group-item-action">` + no++ + '. ' +
+                                      result.tindakan_keluarga +
+                                      `</a>
+                                    `
+                                  );
+                              });
+                          } else {
+                              $('.datatindakan').html('');
+                          }
+                          // if (data.hasil >= 6) {
+                          //   $('#modal-hasil-depresi').modal('show');
+                          // } else {
+                          //   $('#modal-hasil-normal').modal('show');
+                          // }
+                          // Swal.fire({
+                          //   icon: 'success',
+                          //   title: 'Data berhasil disimpan',
+                          //   showConfirmButton: false,
+                          //   timer: 1500
+                          // })
+                          // window.location.href = "<?php base_url(); ?>blog/";
+                      }
+                  });
               })
 
               $(document).on("click", ".cek", function() {
@@ -160,6 +172,8 @@
                   dataTable.ajax.reload();
                   window.open('<?= base_url(); ?>beranda/formgejalakambuh/' + id);
               })
+
+
 
           });
       </script>

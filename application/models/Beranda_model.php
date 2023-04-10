@@ -52,7 +52,18 @@
         public function make_query_gejala_kambuh()
         {
             $id_pasien = $_POST['id_pasien'];
-            $this->db->select('*');
+            $this->db->select('
+            gejala_kambuh.id,
+            gejala_kambuh.id_pasien,
+            gejala_kambuh.id_user,
+            gejala_kambuh.hasil,
+            gejala_kambuh.tahap,
+            gejala_kambuh.status,
+            gejala_kambuh.created_at,
+            gejala_kambuh.updated_at,
+            master_tahap_kambuh.tahap_kambuh
+            ');
+            $this->db->join('master_tahap_kambuh', 'master_tahap_kambuh.id_tahap = gejala_kambuh.tahap', 'LEFT');
             $this->db->where('id_pasien', $id_pasien);
             $this->db->from('gejala_kambuh');
             if (($_POST["search"]["value"])) {

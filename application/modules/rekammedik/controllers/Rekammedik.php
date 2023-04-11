@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pasien extends MX_Controller
+class Rekammedik extends MX_Controller
 {
     public function __construct()
     {
@@ -20,6 +20,18 @@ class Pasien extends MX_Controller
 
         $data['content'] = '';
         $page = 'user/index';
+        // echo modules::run('template/loadview', $data);
+        echo modules::run('template/loadview', $data, $page);
+    }
+
+    public function datapribadi()
+    {
+        $data['title'] = 'Data Pribadi';
+        $data['user'] = $this->db->get_where('user', ['username' =>
+        $this->session->userdata('username')])->row_array();
+
+        $data['content'] = '';
+        $page = 'rekammedik/data_pribadi';
         // echo modules::run('template/loadview', $data);
         echo modules::run('template/loadview', $data, $page);
     }

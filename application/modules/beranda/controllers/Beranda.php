@@ -245,7 +245,7 @@ class Beranda extends MX_Controller
             }
 
             $sub_array[] = $no;
-            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . $row->created_at . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . $row->updated_at . '</span><br>';
+            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . date('d-m-Y h:i:s', strtotime($row->created_at)) . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . date('d-m-Y h:i:s', strtotime($row->updated_at))  . '</span><br>';
 
 
             $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $row->tahap_kambuh . '</span><br>';
@@ -288,7 +288,7 @@ class Beranda extends MX_Controller
             }
 
             $sub_array[] = $no;
-            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . $row->created_at . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . $row->updated_at . '</span><br>';
+            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . date('d-m-Y h:i:s', strtotime($row->created_at)) . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . date('d-m-Y h:i:s', strtotime($row->updated_at)) . '</span><br>';
 
 
             if ($row->hasil >= 6) {

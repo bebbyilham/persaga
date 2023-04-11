@@ -32,7 +32,7 @@
                                   <tr>
                                       <th class="text-center" style="width: 1%;">#</th>
                                       <th style="width: 2%;">No.</th>
-                                      <th style="width: 10%;">Tanggal</th>
+                                      <th style="width: 10%;">Waktu</th>
                                       <th style="width: 10%;">Hasil</th>
                                       <th style="width: 10%;">Status</th>
                                   </tr>

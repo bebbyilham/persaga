@@ -17,7 +17,7 @@ class Beranda extends MX_Controller
         $this->session->userdata('username')])->row_array();
 
         $data['content'] = '';
-        $page = 'beranda/index';
+        $page = 'user/index';
         // echo modules::run('template/loadview', $data);
         echo modules::run('template/loadview', $data, $page);
     }

@@ -68,7 +68,7 @@
                             <span class="btn-inner--icon">
                                 <i class="fas fa-newspaper mr-2"></i>
                             </span>
-                            <span class="nav-link-inner--text">Blog</span>
+                            <span class="nav-link-inner--text"></span>
                         </a>
                     </li>
                 </ul>
@@ -102,7 +102,7 @@
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-4">
-                                <h3>LOGIN PERSAGA</h3>
+                                <h3>LOGIN PERSAGA <sup>Con-Care</sup></strong></h3>
                             </div>
                             <?= $this->session->flashdata('message'); ?>
                             <form role="form" action="<?= base_url('auth'); ?>" method="post">

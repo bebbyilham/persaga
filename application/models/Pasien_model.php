@@ -1,6 +1,10 @@
  <?php
     class Pasien_model extends CI_Model
     {
+        public function tambah_pasien_mr_manual($data)
+        {
+            $this->db->insert('pasien', $data);
+        }
         //tabel pasien
         var $order_column = array(null, 'name', null, 'status', 'created_at', null);
         public function make_query_pasien()

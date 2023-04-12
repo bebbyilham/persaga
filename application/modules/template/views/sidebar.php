@@ -20,6 +20,7 @@ $menu = $this->db->query($queryMenu)->result_array();
                 <div class="row ml-4">
                     <!-- <img src="<?= base_url(); ?>assets/img/logo.png" class="navbar-brand-img" alt="..."> -->
                     <h3 class="text-primary">PERSAGA</strong></h3>
+                    <p class="text-primary">Con-Care</p>
                 </div>
             </a>
             <div class="ml-auto">

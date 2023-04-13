@@ -9,6 +9,7 @@ class Edukasi extends MX_Controller
         is_logged_in();
         $this->load->model('Pasien_model');
         $this->load->model('Informasi_model');
+        $this->load->model('Edukasi_model');
     }
 
     public function index()
@@ -33,6 +34,58 @@ class Edukasi extends MX_Controller
         $page = 'edukasi/sehat_jiwa';
         // echo modules::run('template/loadview', $data);
         echo modules::run('template/loadview', $data, $page);
+    }
+
+    public function tabelmateriedukasi()
+    {
+        $fetch_data = $this->Edukasi_model->make_datatables_materi_edukasi();
+
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($fetch_data as $row) {
+            $no++;
+            $sub_array = array();
+            $sub_array[] = $no;
+            $sub_array[] = $row->nama_materi;
+            $sub_array[] = '<a class="lihat_file badge badge-primary" id="' . $row->id_materi . '" materi="' . $row->nama_file . '" title="Lihat" >Lihat</a><br>';
+
+
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw"                => intval($_POST['draw']),
+            "recordsTotal"        => $this->Edukasi_model->get_all_data_materi_edukasi(),
+            "recordsFiltered"     => $this->Edukasi_model->get_filtered_data_materi_edukasi(),
+            "data"                => $data
+        );
+        echo json_encode($output);
+    }
+
+    public function tabelvideoedukasi()
+    {
+        $fetch_data = $this->Edukasi_model->make_datatables_video_edukasi();
+
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($fetch_data as $row) {
+            $no++;
+            $sub_array = array();
+            $sub_array[] = $no;
+            $sub_array[] = $row->nama_video;
+            $sub_array[] = '<a class="lihat_video badge badge-primary" id="' . $row->id_video . '" video="' . $row->link_video . '" title="Lihat" >Lihat</a><br>';
+
+
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw"                => intval($_POST['draw']),
+            "recordsTotal"        => $this->Edukasi_model->get_all_data_video_edukasi(),
+            "recordsFiltered"     => $this->Edukasi_model->get_filtered_data_video_edukasi(),
+            "data"                => $data
+        );
+        echo json_encode($output);
     }
 
     public function pelayanankesehatan()

@@ -11,6 +11,8 @@ class Sync extends MX_Controller
 
     public function syncpasien()
     {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: POST, GET,OPTIONS");
         $cektnomr = $this->db->get_where('pasien', ['no_mr' => preg_replace("/-/", "", $this->input->post('no_mr'))])->result();
         if ($cektnomr) {
             echo json_encode([
@@ -82,7 +84,7 @@ class Sync extends MX_Controller
                 'role_id'     => 41,
                 'pasien_id'  => $this->input->post('id_pasien'),
                 'username'    => preg_replace("/-/", "", $this->input->post('no_mr')),
-                'password'    => password_hash('RSJ@dm1n', PASSWORD_DEFAULT),
+                'password'    => password_hash('Persaga@23', PASSWORD_DEFAULT),
                 'nama_akun'   => $this->input->post('nama_pasien'),
                 'image'       => 'default.png',
                 'is_active'   => 1

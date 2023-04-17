@@ -21,6 +21,7 @@ class Sync extends MX_Controller
             ], 201);
         } else {
             $data = array(
+                'id_pasien' => $this->input->post('id_pasien'),
                 'no_mr' => preg_replace("/-/", "", $this->input->post('no_mr')),
                 'no_bpjs' => $this->input->post('no_bpjs'),
                 'nama_pasien' => $this->input->post('nama_pasien'),
@@ -77,10 +78,19 @@ class Sync extends MX_Controller
                 'status_mr' => 1,
 
             );
+            $datauser = [
+                'role_id'     => 41,
+                'pasien_id'  => $this->input->post('id_pasien'),
+                'username'    => preg_replace("/-/", "", $this->input->post('no_mr')),
+                'password'    => password_hash('RSJ@dm1n', PASSWORD_DEFAULT),
+                'nama_akun'   => $this->input->post('nama_pasien'),
+                'image'       => 'default.png',
+                'is_active'   => 1
+            ];
 
-            // $this->Pendaftaran_model->tambah_pasien($this->input->post('no_mr'), $data);
             $this->Pasien_model->tambah_pasien_mr_manual($data);
-            // echo 'Data Pasien berhasil disimpan!';
+            $this->db->insert('user', $datauser);
+
             echo json_encode([
                 'metadata' => [
                     'message' => 'Data Pasien berhasil disimpan!',

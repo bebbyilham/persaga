@@ -6,7 +6,7 @@
             $this->db->insert('pasien', $data);
         }
         //tabel pasien
-        var $order_column = array(null, 'name', null, 'status', 'created_at', null);
+        var $order_column = array(null, 'no_mr', null, 'status', 'created_at', null);
         public function make_query_pasien()
         {
             // $id_pasien = $_POST['idpasien'];
@@ -14,13 +14,14 @@
             // $this->db->where('jenis_layanan', 2);
             $this->db->from('pasien');
             if (($_POST["search"]["value"])) {
-                $this->db->like('nama', $_POST["search"]["value"]);
+                $this->db->like('no_mr',  preg_replace("/-/", "", $_POST["search"]["value"]));
+                $this->db->or_like('nama_pasien', $_POST["search"]["value"]);
             }
 
             if (isset($_POST["order"])) {
                 $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
             } else {
-                $this->db->order_by('id', 'ASC');
+                $this->db->order_by('no_mr', 'ASC');
             }
         }
 

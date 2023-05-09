@@ -1,5 +1,5 @@
  <?php
-    class Pasien_model extends CI_Model
+    class Sync_model extends CI_Model
     {
         //tabel pasien
         var $order_column = array(null, 'name', null, 'status', 'created_at', null);
@@ -47,6 +47,113 @@
             return $this->db->count_all_results();
         }
         //end pasien
+
+        //tabel
+        var $order_column_kj = array(null, 'status', 'created_at', null);
+        public function make_query_kejiwaan_keluarga()
+        {
+            $id_pasien = $_POST['id_pasien'];
+            $this->db->select('*');
+            $this->db->where('id_pasien', $id_pasien);
+            $this->db->from('kejiwaan_keluarga');
+            if (($_POST["search"]["value"])) {
+                $this->db->like('created_at', $_POST["search"]["value"]);
+            }
+
+            if (isset($_POST["order"])) {
+                $this->db->order_by($this->order_column_kj[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            } else {
+                $this->db->order_by('id', 'ASC');
+            }
+        }
+
+
+        public function make_datatables_kejiwaan_keluarga()
+        {
+            $this->make_query_kejiwaan_keluarga();
+
+            if (
+                $_POST["length"] != -1
+            ) {
+                $this->db->limit($_POST['length'], $_POST['start']);
+            }
+            $query = $this->db->get();
+            return $query->result();
+        }
+
+        public function get_filtered_data_kejiwaan_keluarga()
+        {
+            $this->make_query_kejiwaan_keluarga();
+            $query = $this->db->get();
+
+            return $query->num_rows();
+        }
+
+        public function get_all_data_kejiwaan_keluarga()
+        {
+            $this->db->select("*");
+            $this->db->from('kejiwaan_keluarga');
+            return $this->db->count_all_results();
+        }
+        //end blog
+
+        var $order_column_gejala = array(null, 'status', 'created_at', null);
+        public function make_query_gejala_kambuh()
+        {
+            $id_pasien = $_POST['id_pasien'];
+            $this->db->select('
+            gejala_kambuh.id,
+            gejala_kambuh.id_pasien,
+            gejala_kambuh.id_user,
+            gejala_kambuh.hasil,
+            gejala_kambuh.tahap,
+            gejala_kambuh.status,
+            gejala_kambuh.created_at,
+            gejala_kambuh.updated_at,
+            master_tahap_kambuh.tahap_kambuh
+            ');
+            $this->db->join('master_tahap_kambuh', 'master_tahap_kambuh.id_tahap = gejala_kambuh.tahap', 'LEFT');
+            $this->db->where('id_pasien', $id_pasien);
+            $this->db->from('gejala_kambuh');
+            if (($_POST["search"]["value"])) {
+                $this->db->like('created_at', $_POST["search"]["value"]);
+            }
+
+            if (isset($_POST["order"])) {
+                $this->db->order_by($this->order_column_gejala[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            } else {
+                $this->db->order_by('id', 'ASC');
+            }
+        }
+
+
+        public function make_datatables_gejala_kambuh()
+        {
+            $this->make_query_gejala_kambuh();
+
+            if (
+                $_POST["length"] != -1
+            ) {
+                $this->db->limit($_POST['length'], $_POST['start']);
+            }
+            $query = $this->db->get();
+            return $query->result();
+        }
+
+        public function get_filtered_data_gejala_kambuh()
+        {
+            $this->make_query_gejala_kambuh();
+            $query = $this->db->get();
+
+            return $query->num_rows();
+        }
+
+        public function get_all_data_gejala_kambuh()
+        {
+            $this->db->select("*");
+            $this->db->from('gejala_kambuh');
+            return $this->db->count_all_results();
+        }
 
         //tabel rawatan
         var $order_column_rawatan = array(null, 'name', null, 'status', 'created_at', null);

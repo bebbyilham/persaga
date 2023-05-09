@@ -7,6 +7,8 @@ class Sync extends MX_Controller
     {
         parent::__construct();
         $this->load->model('Pasien_model');
+        $this->load->model('Beranda_model');
+        $this->load->model('Sync_model');
     }
 
     public function syncpasien()
@@ -100,6 +102,145 @@ class Sync extends MX_Controller
                 ],
             ], 200);
         }
+    }
+
+    public function tabel_monitoring_pasien()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: POST, GET,OPTIONS");
+        $fetch_data = $this->Pasien_model->make_datatables_pasien();
+
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($fetch_data as $row) {
+            $no++;
+            $sub_array = array();
+            $birthDate = new DateTime($row->tanggal_lahir);
+            $today = new DateTime("today");
+            if ($birthDate > $today) {
+                exit("0 tahun 0 bulan 0 hari");
+            }
+            $y = $today->diff($birthDate)->y;
+            $m = $today->diff($birthDate)->m;
+            $d = $today->diff($birthDate)->d;
+
+            $sub_array[] = '<div class="text-center">
+            <div class="dropdown">
+                            <a class="text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v mr-2"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <span class="small p-3 font-weight-bold text-dark">' . strtoupper("$row->nama_pasien") . '</span>
+                                <a class="dropdown-item info_pasien" href="#" id="' . $row->id . '" namapasien="' . $row->nama_pasien . '" idpasien="' . $row->id_pasien . '">Info Pasien</a>
+                                <a class="dropdown-item kunjungan_pasien" href="#" id="' . $row->id . '" namapasien="' . $row->nama_pasien . '" idpasien="' . $row->id_pasien . '" nomr="' . $row->no_mr . '">Kunjungan Pasien</a>
+                                <a class="dropdown-item gejala_kambuh" href="#" id="' . $row->id . '" namapasien="' . $row->nama_pasien . '" idpasien="' . $row->id_pasien . '" nomr="' . $row->no_mr . '">Deteksi Dini Gejala Kambuh</a>
+                                <a class="dropdown-item jiwa_keluarga" href="#" id="' . $row->id . '" namapasien="' . $row->nama_pasien . '" idpasien="' . $row->id_pasien . '" nomr="' . $row->no_mr . '">Kesehatan Jiwa Keluarga</a>
+                                
+                            </div>
+            </div><br><br>
+          
+            </div>
+            ';
+            //   <a class="text-primary cetakresume" href="#" id="' . $row->id . '" idpasien="' . $row->id_pasien . '" namapasien="' . $row->nama_pasien . '">
+            //                     <i class="fas fa-print mr-2"></i>
+            // </a>
+            $sub_array[] = $no;
+            if ($row->jenis_kelamin == '1') {
+                $jk = 'Laki-laki';
+            } else {
+                $jk = 'Perempuan';
+            }
+            $sub_array[] = "<b>" . strtoupper("$row->nama_pasien") . "</b><br>" . $row->no_mr . "<br>" . $row->nomor_pengenal . "<br>" . strtoupper("$jk") . "<br>" . $y . " Tahun " . $m . " Bulan " . $d . " Hari <br>" . $row->createdAt;
+            $sub_array[] = $row->alamat_pasien;
+
+
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw"                => intval($_POST['draw']),
+            "recordsTotal"        => $this->Pasien_model->get_all_data_pasien(),
+            "recordsFiltered"     => $this->Pasien_model->get_filtered_data_pasien(),
+            "data"                => $data
+        );
+        echo json_encode($output);
+    }
+
+    public function tabelgejalakambuh()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: POST, GET,OPTIONS");
+        $fetch_data = $this->Beranda_model->make_datatables_gejala_kambuh();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($fetch_data as $row) {
+            $no++;
+            $sub_array = array();
+            $sub_array[] = $no;
+            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . date('d-m-Y h:i:s', strtotime($row->created_at)) . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . date('d-m-Y h:i:s', strtotime($row->updated_at))  . '</span><br>';
+
+
+            $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $row->tahap_kambuh . '</span><br>';
+            if ($row->status >= 1) {
+                $status = 'Selesai';
+                $sub_array[] = '<span href="#" class="status badge badge-success" title="Selesai" >' . $status . '</span><br>';
+            } else {
+                $status = 'Draft';
+                $sub_array[] = '<span href="#" class="status badge badge-secondary" title="Draft" >' . $status . '</span><br>';
+            }
+
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw"                => intval($_POST['draw']),
+            "recordsTotal"        => $this->Beranda_model->get_all_data_gejala_kambuh(),
+            "recordsFiltered"     => $this->Beranda_model->get_filtered_data_gejala_kambuh(),
+            "data"                => $data
+        );
+        echo json_encode($output);
+    }
+
+    public function tabelkejiwaankeluarga()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: POST, GET,OPTIONS");
+        $fetch_data = $this->Beranda_model->make_datatables_kejiwaan_keluarga();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($fetch_data as $row) {
+            $no++;
+            $sub_array = array();
+
+            $sub_array[] = $no;
+            $sub_array[] = '<span href="#" class="status badge badge-primary" title="Dibuat" >' . date('d-m-Y h:i:s', strtotime($row->created_at)) . '</span><br>' . '<span href="#" class="status badge badge-info" title="Diperbarui" >' . date('d-m-Y h:i:s', strtotime($row->updated_at)) . '</span><br>';
+
+
+            if ($row->hasil >= 6) {
+                $hasil = 'Cemas atau Depresi';
+                $sub_array[] = '<span href="#" class="status badge badge-danger" title="Cemas atau Depresi" >' . $hasil . '</span><br>';
+            } else {
+                $hasil = 'Normal';
+                $sub_array[] = '<span href="#" class="status badge badge-success" title="Normal" >' . $hasil . '</span><br>';
+            }
+            if ($row->status >= 1) {
+                $status = 'Selesai';
+                $sub_array[] = '<span href="#" class="status badge badge-success" title="Selesai" >' . $status . '</span><br>';
+            } else {
+                $status = 'Draft';
+                $sub_array[] = '<span href="#" class="status badge badge-secondary" title="Draft" >' . $status . '</span><br>';
+            }
+
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw"                => intval($_POST['draw']),
+            "recordsTotal"        => $this->Beranda_model->get_all_data_kejiwaan_keluarga(),
+            "recordsFiltered"     => $this->Beranda_model->get_filtered_data_kejiwaan_keluarga(),
+            "data"                => $data
+        );
+        echo json_encode($output);
     }
 
 

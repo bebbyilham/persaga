@@ -170,7 +170,7 @@ class Sync extends MX_Controller
     {
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: POST, GET,OPTIONS");
-        $fetch_data = $this->Beranda_model->make_datatables_gejala_kambuh();
+        $fetch_data = $this->Sync_model->make_datatables_gejala_kambuh();
         $data = array();
         $no = $_POST['start'];
         foreach ($fetch_data as $row) {
@@ -194,8 +194,8 @@ class Sync extends MX_Controller
 
         $output = array(
             "draw"                => intval($_POST['draw']),
-            "recordsTotal"        => $this->Beranda_model->get_all_data_gejala_kambuh(),
-            "recordsFiltered"     => $this->Beranda_model->get_filtered_data_gejala_kambuh(),
+            "recordsTotal"        => $this->Sync_model->get_all_data_gejala_kambuh(),
+            "recordsFiltered"     => $this->Sync_model->get_filtered_data_gejala_kambuh(),
             "data"                => $data
         );
         echo json_encode($output);
@@ -205,7 +205,7 @@ class Sync extends MX_Controller
     {
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: POST, GET,OPTIONS");
-        $fetch_data = $this->Beranda_model->make_datatables_kejiwaan_keluarga();
+        $fetch_data = $this->Sync_model->make_datatables_kejiwaan_keluarga();
         $data = array();
         $no = $_POST['start'];
         foreach ($fetch_data as $row) {
@@ -236,8 +236,8 @@ class Sync extends MX_Controller
 
         $output = array(
             "draw"                => intval($_POST['draw']),
-            "recordsTotal"        => $this->Beranda_model->get_all_data_kejiwaan_keluarga(),
-            "recordsFiltered"     => $this->Beranda_model->get_filtered_data_kejiwaan_keluarga(),
+            "recordsTotal"        => $this->Sync_model->get_all_data_kejiwaan_keluarga(),
+            "recordsFiltered"     => $this->Sync_model->get_filtered_data_kejiwaan_keluarga(),
             "data"                => $data
         );
         echo json_encode($output);

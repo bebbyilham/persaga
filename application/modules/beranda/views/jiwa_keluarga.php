@@ -100,9 +100,40 @@
               </div>
           </div>
       </div>
+      <div class="modal fade" id="modalEdit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title">Ubah Waktu</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group row">
+                          <div class="input-group">
+                              <input type="hidden" class="form-control" id="id_input" name="id_input" autocomplete="off" required>
+                              <input type="text" class="form-control" id="tanggal_input" name="tanggal_input" autocomplete="off" required>
+                              <span class="input-group-append">
+                                  <button type="button" class="btn btn-primary btn_simpan">Simpan</button>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
       <script>
           $(document).ready(function() {
               $('#loading').hide();
+              $('#tanggal_input').datetimepicker({
+                  timepicker: true,
+                  datepicker: true,
+                  scrollInput: false,
+                  theme: 'success',
+                  format: 'Y-m-d H:i:s',
+                  minDate: '0',
+              });
               // DataTable
               var dataTable = $('#tabel_jiwa_keluarga').DataTable({
                   "serverSide": true,
@@ -161,6 +192,32 @@
                   dataTable.ajax.reload();
                   window.open('<?= base_url(); ?>beranda/formkesehatanjiwakeluarga/' + id);
               })
+              $(document).on('click', '.edit', function() {
+                  var id = $(this).attr('id');
+                  $('#modalEdit').modal('show');
+                  $('#tanggal_input').val('');
+                  $('#id_input').val(id);
+              });
+              $(document).on('click', '.btn_simpan', function() {
+                  var tgl_input = $('#tanggal_input').val();
+                  var id_input = $('#id_input').val();
+
+                  $.ajax({
+                      url: '<?php echo base_url(); ?>beranda/updatetgljiwakeluarga',
+                      method: 'POST',
+                      dataType: 'JSON',
+                      data: {
+                          id_input: id_input,
+                          tgl_input: tgl_input,
+                      },
+                      success: function(data) {
+                          $('#tanggal_input').val('');
+                          //   console.log(data);
+                          dataTable.ajax.reload();
+                          $('#modalEdit').modal('hide');
+                      }
+                  });
+              });
 
           });
       </script>

@@ -78,6 +78,36 @@ class Beranda extends MX_Controller
         echo json_encode($idgejalakambuh);
     }
 
+    public function updatetglgejalakambuh()
+    {
+        $id_input = $_POST['id_input'];
+        $tgl_input = $_POST['tgl_input'];
+
+        $data = array(
+            'created_at'         => $tgl_input,
+            'updated_at'         => $tgl_input,
+
+        );
+
+        $this->Beranda_model->ubah_gejala_kambuh($data, $id_input);
+        echo json_encode('Berhasil diubah');
+    }
+
+    public function updatetgljiwakeluarga()
+    {
+        $id_input = $_POST['id_input'];
+        $tgl_input = $_POST['tgl_input'];
+
+        $data = array(
+            'created_at'         => $tgl_input,
+            'updated_at'         => $tgl_input,
+
+        );
+
+        $this->Beranda_model->ubah_jiwa_keluarga($data, $id_input);
+        echo json_encode('Berhasil diubah');
+    }
+
     public function formkesehatanjiwakeluarga($id)
     {
         $data['title'] = 'Kesehatan Jiwa Keluarga';
@@ -241,7 +271,9 @@ class Beranda extends MX_Controller
                 ';
             } else {
                 $sub_array[] = '
-                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>';
+                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
+                <a href="#" class="fas fa-edit fa-lg ml-2 mr-2 edit" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
+                ';
             }
 
             $sub_array[] = $no;
@@ -284,7 +316,9 @@ class Beranda extends MX_Controller
                 ';
             } else {
                 $sub_array[] = '
-                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>';
+                <a href="#" class="fas fa-check-circle fa-lg ml-2 mr-2 cek" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
+                  <a href="#" class="fas fa-edit fa-lg ml-2 mr-2 edit" id="' . $row->id . '" pasien="' . $row->id_pasien . '" hasil="' . $row->hasil . '" data-toggle="modal" data-target="#staticBackdrop" title="Cek"></a>
+                ';
             }
 
             $sub_array[] = $no;

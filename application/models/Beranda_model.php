@@ -104,6 +104,17 @@
             return $this->db->count_all_results();
         }
 
+        public function ubah_gejala_kambuh($data, $id)
+        {
+            $this->db->where('id', $id);
+            $this->db->update('gejala_kambuh', $data);
+        }
+        public function ubah_jiwa_keluarga($data, $id)
+        {
+            $this->db->where('id', $id);
+            $this->db->update('kejiwaan_keluarga', $data);
+        }
+
         //image blog
         var $order_column_image_blog = array(null, 'name', null, 'status', 'created_at', null);
         public function make_query_image_blog()

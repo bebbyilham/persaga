@@ -150,7 +150,7 @@ class Sync extends MX_Controller
             } else {
                 $jk = 'Perempuan';
             }
-            $sub_array[] = "<b>" . strtoupper("$row->nama_pasien") . "</b><br>" . $row->no_mr . "<br>" . $row->nomor_pengenal . "<br>" . strtoupper("$jk") . "<br>" . $y . " Tahun " . $m . " Bulan " . $d . " Hari <br>" . $row->createdAt;
+            $sub_array[] = "<b>" . strtoupper("$row->nama_pasien") . "</b><br>" . $row->no_mr . "<br>" . $row->nomor_pengenal . "<br>" . strtoupper("$jk") . "<br>" . $y . " Tahun " . $m . " Bulan " . $d . " Hari <br>";
             $sub_array[] = $row->alamat_pasien;
 
 

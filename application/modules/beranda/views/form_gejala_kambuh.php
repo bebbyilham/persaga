@@ -97,8 +97,8 @@
   </div>
   <!-- Modal  -->
   <div class="modal fade" id="modal-hasil-depresi" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-danger modal-xl modal-dialog-centered modal-" role="document">
-      <div class="modal-content bg-gradient-danger">
+    <div id="modaldg" class="modal-dialog modal-danger modal-xl modal-dialog-centered modal-" role="document">
+      <div id="modalcnt" class="modal-content bg-gradient-danger">
         <div class="modal-header">
           <h6 class="modal-title" id="modal-title-notification">Hasil</h6>
           <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -107,9 +107,9 @@
         </div>
         <div class="modal-body">
           <div class="py-3 text-center">
-            <i class="fas fa-tired fa-10x"></i>
+            <i id="iconkondisi" class="fas fa-tired fa-10x"></i>
             <h1 class="heading mt-4 tahapkambuh"></h1>
-            <h4 class="heading mt-4">Tindakan yang dapat dilakukan keluarga</h4>
+            <h4 class="heading mt-4 text_deteksi">Tindakan yang dapat dilakukan keluarga</h4>
           </div>
           <div class="list-group datatindakan">
           </div>
@@ -186,10 +186,19 @@
           success: function(data) {
             console.log(data);
             $('#modal-hasil-depresi').modal('show');
+            $('#modaldg').removeClass('modal-danger').addClass('modal-success');
+            $('#modalcnt').removeClass('bg-gradient-danger').addClass('bg-gradient-success');
+            $('#iconkondisi').removeClass('fas fa-tired fa-10x').addClass('fas fa-smile fa-10x');
+            $('.text_deteksi').text('Anda tidak mengalami kekambuhan');
+
+            $('.datatindakan').html('');
             var hasiltahap = data['hasiltahap']['tahap_kambuh'];
             // console.log(hasiltahap);
             $('.tahapkambuh').text(hasiltahap);
-
+            $('#modaldg').removeClass('modal-success').addClass('modal-danger');
+            $('#modalcnt').removeClass('bg-gradient-success').addClass('bg-gradient-danger');
+            $('#iconkondisi').removeClass('fas fa-smile fa-10x').addClass('fas fa-tired fa-10x');
+            $('.text_deteksi').text('Tindakan yang dapat dilakukan keluarga');
             if (data['hasiltindakan']) {
               var hasiltindakan = data['hasiltindakan'];
               var no = 1
@@ -203,6 +212,9 @@
                 );
               });
             } else {
+              $('#modaldg').removeClass('modal-danger').addClass('modal-success');
+              $('#modalcnt').removeClass('bg-gradient-danger').addClass('bg-gradient-success');
+              $('.text_deteksi').text('Anda tidak mengalami kekambuhan');
               $('.datatindakan').html('');
             }
             // if (data.hasil >= 6) {

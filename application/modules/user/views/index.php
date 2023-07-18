@@ -42,6 +42,9 @@
                   <div class="card-body ">
                       <p class="card-text"><?= $user['nama_akun']; ?></p>
                       <p class="card-text"><small class="text-muted"></small></p>
+                      <div class="text-center">
+                          <a href="https://www.youtube.com/watch?v=UyiQHOfFFxM" id="simpan" class="btn btn-sm btn-primary" target="_blank">Panduan penggunaan aplikasi Persaga Con-care</a>
+                      </div>
                   </div>
               </div>
           </div>

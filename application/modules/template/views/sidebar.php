@@ -20,8 +20,6 @@ $menu = $this->db->query($queryMenu)->result_array();
                 <div class="row ml-4">
                     <!-- <img src="<?= base_url(); ?>assets/img/logo.png" class="navbar-brand-img" alt="..."> -->
                     <h3 class="text-primary">UDA GAGAH </strong></h3>
-                    <p class="text-primary"><sup>Upayakan Deteksi dan KonsultAsi</sup></p>
-                    <p class="text-primary"><sup>untuk ceGAh pasunG dan kekambuHan</sup></p>
                 </div>
             </a>
             <div class="ml-auto">

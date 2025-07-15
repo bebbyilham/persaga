@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PERSAGA | Selamat Datang</title>
+    <!-- <title>PERSAGA | Selamat Datang</title> -->
+    <title>UDA GAGAH | Selamat Datang</title>
     <link rel="icon" href="<?= base_url(); ?>assets/icons/logo.png" type="image/png">
 
     <!-- Fonts -->
@@ -102,7 +103,9 @@
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-4">
-                                <h3>LOGIN PERSAGA <sup>Con-Care</sup></strong></h3>
+                                <!-- <h3>LOGIN PERSAGA <sup>Con-Care</sup></strong></h3> -->
+                                <h3>LOGIN UDA GAGAH</h3>
+                                <p>Upayakan Deteksi dan KonsultAsi untuk ceGAh pasunG dan kekambuHan</p>
                             </div>
                             <?= $this->session->flashdata('message'); ?>
                             <form role="form" action="<?= base_url('auth'); ?>" method="post">

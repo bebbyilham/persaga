@@ -19,8 +19,10 @@ $menu = $this->db->query($queryMenu)->result_array();
             <a class="navbar-brand mt-2" href="<?= base_url('auth'); ?>">
                 <div class="row ml-4">
                     <!-- <img src="<?= base_url(); ?>assets/img/logo.png" class="navbar-brand-img" alt="..."> -->
-                    <h3 class="text-primary">PERSAGA <sup>Con-Care</sup></strong></h3>
-                    <p class="text-primary"></p>
+                    <!-- <h3 class="text-primary">PERSAGA <sup>Con-Care</sup></strong></h3>
+                    <p class="text-primary"></p> -->
+                    <h3>LOGIN UDA GAGAH</h3>
+                    <p>Upayakan Deteksi dan KonsultAsi untuk ceGAh pasunG dan kekambuHan</p>
                 </div>
             </a>
             <div class="ml-auto">

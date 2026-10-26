@@ -1,4 +1,4 @@
- <?php
+<?php
     class Beranda_model extends CI_Model
     {
         //tabel
@@ -196,4 +196,3 @@
             $this->db->delete('image_blogs');
         }
     }
-    ?>

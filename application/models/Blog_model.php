@@ -1,4 +1,4 @@
- <?php
+<?php
     class Blog_model extends CI_Model
     {
         //tabel blog
@@ -114,4 +114,3 @@
             $this->db->delete('image_blogs');
         }
     }
-    ?>

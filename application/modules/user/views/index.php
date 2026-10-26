@@ -43,7 +43,7 @@
                       <p class="card-text"><?= $user['nama_akun']; ?></p>
                       <p class="card-text"><small class="text-muted"></small></p>
                       <div class="text-center">
-                          <a href="https://www.youtube.com/watch?v=UyiQHOfFFxM" id="simpan" class="btn btn-sm btn-primary" target="_blank">Panduan penggunaan aplikasi UDA GAGAH</a>
+                          <a href="https://drive.google.com/file/d/1Tz95oCFD3nhT84cSg2jFzfMr5Cj9zP9R/view?usp=sharing" id="simpan" class="btn btn-sm btn-primary" target="_blank">Panduan penggunaan aplikasi UDA GAGAH</a>
                       </div>
                   </div>
               </div>

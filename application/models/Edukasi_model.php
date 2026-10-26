@@ -1,4 +1,4 @@
- <?php
+<?php
     class Edukasi_model extends CI_Model
     {
 
@@ -939,4 +939,3 @@
             $this->db->delete('image_pasiens');
         }
     }
-    ?>

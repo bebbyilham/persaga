@@ -1,4 +1,4 @@
- <?php
+<?php
     class Pasien_model extends CI_Model
     {
         public function tambah_pasien_mr_manual($data)
@@ -885,4 +885,3 @@
             $this->db->delete('image_pasiens');
         }
     }
-    ?>

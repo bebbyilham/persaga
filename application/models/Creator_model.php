@@ -1,4 +1,4 @@
- <?php
+<?php
     class Creator_model extends CI_Model
     {
         //tabel blog
@@ -53,4 +53,3 @@
             return $query->result();
         }
     }
-    ?>

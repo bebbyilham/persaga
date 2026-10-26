@@ -1,4 +1,4 @@
- <?php
+<?php
     class Sync_model extends CI_Model
     {
         //tabel pasien
@@ -987,4 +987,3 @@
             $this->db->delete('image_pasiens');
         }
     }
-    ?>
